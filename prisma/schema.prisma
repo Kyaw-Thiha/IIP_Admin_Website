@@ -79,6 +79,7 @@ model VerificationToken {
 model IGCSEClass {
     id         String    @id @default(cuid())
     year       Int
+    series     String
     alumni     IGCSEAlumni[]
 
     @@unique([id])
@@ -99,6 +100,7 @@ model IGCSEAlumni {
 model ALevelClass {
     id         String    @id @default(cuid())
     year       Int
+    series     String
     alumni     ALevelAlumni[]
 
     @@unique([id])
