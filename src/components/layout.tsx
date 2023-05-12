@@ -1,21 +1,13 @@
 import { type Metadata } from "next";
 import Image from "next/image";
-import { Download } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CalendarDateRangePicker } from "@/components/dashboard/date-range-picker";
 import { MainNav } from "@/components/dashboard/main-nav";
-
 import { Search } from "@/components/dashboard/search";
 import TeamSwitcher from "@/components/dashboard/team-switcher";
 import { UserNav } from "@/components/dashboard/user-nav";
 
-import TabOverview from "@/components/dashboard/tab-overview";
-import TabAlumni from "@/components/dashboard/tab-alumni";
 import Link from "next/link";
-import { type ReactComponentElement } from "react";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -70,14 +62,20 @@ export default function Layout(props: Props) {
           </div>
           <Tabs defaultValue={props.activeValue} className="space-y-4">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <Link href="/">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+              </Link>
               <Link href="/alumni">
                 <TabsTrigger value="alumni">Alumni</TabsTrigger>
               </Link>
-              <TabsTrigger value="announcements">Announcements</TabsTrigger>
-              <TabsTrigger value="users" disabled>
-                Users
-              </TabsTrigger>
+              <Link href="/announcements">
+                <TabsTrigger value="announcements">Announcements</TabsTrigger>
+              </Link>
+              <Link href="/users">
+                <TabsTrigger value="users" disabled>
+                  Users
+                </TabsTrigger>
+              </Link>
             </TabsList>
             <TabsContent value={props.activeValue} className="space-y-4">
               {props.children}
