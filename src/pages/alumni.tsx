@@ -29,43 +29,94 @@ import {
   SelectGroup,
   SelectLabel,
 } from "@/components/ui/select";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
 import { Plus } from "lucide-react";
+import { api } from "@/utils/api";
+import { type QueryObserverBaseResult } from "@tanstack/react-query";
 
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app using the components.",
 };
 
-export default function DashboardPage() {
+export default function AlumniPage() {
+  // Automatically animate the list add and delete
+  const [parent, enableAnimations] = useAutoAnimate(/* optional config */);
+
+  //Fetching list of worksheets
+  const {
+    data: igcseClasses,
+    refetch: refetchIgcseClasses,
+    isLoading,
+    isError,
+  } = api.igcseClass.getAll.useQuery(
+    undefined // no input
+  );
+
+  // const deleteUser = api.user.delete.useMutation({
+  //   onSuccess: () => {
+  //     void signOut({
+  //       callbackUrl: `${window.location.origin}`,
+  //     });
+  //   },
+  // });
+
+  const classes = igcseClasses ?? [];
+
   return (
     <>
       <Layout activeValue="alumni">
         <div className="flex items-center justify-between space-y-2">
           <div>IGCSE</div>
           <div className="flex items-center space-x-2">
-            <AddIGCSEYearDialog />
+            <AddIGCSEClassDialog refetch={refetchIgcseClasses} />
           </div>
         </div>
-        <div className="grid  gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="cursor-pointer">
-            <CardHeader className="flex items-center justify-center">
-              <CardTitle>
-                <div className="text-2xl font-bold">2020</div>
-              </CardTitle>
-            </CardHeader>
-          </Card>
+        <div className="grid  gap-4 md:grid-cols-2 lg:grid-cols-4" ref={parent}>
+          {classes.map((igcseClass) => {
+            return (
+              <>
+                <Card className="cursor-pointer">
+                  <CardHeader className="flex items-center justify-center">
+                    <CardTitle>
+                      <div className="text-2xl font-bold">
+                        {igcseClass.series} {igcseClass.year}
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+              </>
+            );
+          })}
         </div>
       </Layout>
     </>
   );
 }
 
-const AddIGCSEYearDialog: React.FC = () => {
+interface Props {
+  refetch: QueryObserverBaseResult["refetch"];
+}
+
+const AddIGCSEClassDialog: React.FC<Props> = () => {
   const seasons = ["Feb/Mar", "May/Jun", "Oct/Nov"];
 
   const [igcseYear, setIGCSEYear] = useState(new Date().getFullYear());
   const [igcseSeries, setIGCSESeries] = useState(seasons[0]);
+
+  const createIGCSEClass = api.igcseClass.create.useMutation({
+    onSuccess: () => {
+      ("");
+    },
+  });
+
+  const addIGCSEClass = () => {
+    createIGCSEClass.mutate({
+      year: igcseYear,
+      series: igcseSeries as "Feb/Mar" | "May/Jun" | "Oct/Nov",
+    });
+  };
 
   return (
     <Dialog>
@@ -123,7 +174,11 @@ const AddIGCSEYearDialog: React.FC = () => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <DialogTrigger asChild>
+            <Button type="submit" onClick={addIGCSEClass}>
+              Save changes
+            </Button>
+          </DialogTrigger>
         </DialogFooter>
       </DialogContent>
     </Dialog>
