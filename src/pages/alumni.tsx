@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { type RouterOutputs, api } from "@/utils/api";
+import { api } from "@/utils/api";
 
 import {
   AddIGCSEClassDialog,
