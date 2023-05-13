@@ -119,6 +119,7 @@ model IGCSEAlumni {
     geography  Int
     extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['English Literature', 'Law']  
     extraSubjectsGrades     Int?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
+    totalMarks Int
     classId    String
     class      IGCSEClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
@@ -164,6 +165,7 @@ model ALevelAlumni {
     business        Int
     accounting      Int
     economics       Int
+    totalMarks      Int
     extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['Geography', 'History']  
     extraSubjectsGrades     Int?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
     classId         String

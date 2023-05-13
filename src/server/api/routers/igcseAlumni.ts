@@ -28,8 +28,22 @@ export const igcseAlumniRouter = createTRPCRouter({
       z.object({
         name: z.string(),
         image: z.string(),
-        grades: z.string(),
         classId: z.string(),
+        esl: z.number(),
+        efl: z.number(),
+        emaths: z.number(),
+        amaths: z.number(),
+        chemistry: z.number(),
+        physics: z.number(),
+        biology: z.number(),
+        ict: z.number(),
+        cs: z.number(),
+        business: z.number(),
+        accounting: z.number(),
+        economics: z.number(),
+        history: z.number(),
+        geography: z.number(),
+        totalMarks: z.number(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -37,19 +51,31 @@ export const igcseAlumniRouter = createTRPCRouter({
         data: {
           name: input.name,
           image: input.image,
-          grades: input.grades,
           classId: input.classId,
+          esl: input.esl,
+          efl: input.efl,
+          emaths: input.emaths,
+          amaths: input.amaths,
+          chemistry: input.chemistry,
+          physics: input.physics,
+          biology: input.biology,
+          ict: input.ict,
+          cs: input.cs,
+          business: input.business,
+          accounting: input.accounting,
+          economics: input.economics,
+          history: input.history,
+          geography: input.geography,
+          totalMarks: input.totalMarks,
         },
       });
     }),
 
-  edit: publicProcedure
+  editName: publicProcedure
     .input(
       z.object({
         id: z.string(),
         name: z.string(),
-        image: z.string(),
-        grades: z.string(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -59,8 +85,70 @@ export const igcseAlumniRouter = createTRPCRouter({
         },
         data: {
           name: input.name,
+        },
+      });
+    }),
+
+  editImage: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        image: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.iGCSEAlumni.update({
+        where: {
+          id: input.id,
+        },
+        data: {
           image: input.image,
-          grades: input.grades,
+        },
+      });
+    }),
+
+  editGrades: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        esl: z.number(),
+        efl: z.number(),
+        emaths: z.number(),
+        amaths: z.number(),
+        chemistry: z.number(),
+        physics: z.number(),
+        biology: z.number(),
+        ict: z.number(),
+        cs: z.number(),
+        business: z.number(),
+        accounting: z.number(),
+        economics: z.number(),
+        history: z.number(),
+        geography: z.number(),
+        totalMarks: z.number(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.iGCSEAlumni.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          esl: input.esl,
+          efl: input.efl,
+          emaths: input.emaths,
+          amaths: input.amaths,
+          chemistry: input.chemistry,
+          physics: input.physics,
+          biology: input.biology,
+          ict: input.ict,
+          cs: input.cs,
+          business: input.business,
+          accounting: input.accounting,
+          economics: input.economics,
+          history: input.history,
+          geography: input.geography,
+          totalMarks: input.totalMarks,
         },
       });
     }),
