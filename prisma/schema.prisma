@@ -85,11 +85,39 @@ model IGCSEClass {
     @@unique([id])
 }
 
+// Each subject columns represent the corresponding grades
+// 10 - A*  (100%)
+// 9  - A*  (90% - 99%)
+// 8  - A   (80% - 89%)
+// 7  - B   (70% - 79%)
+// 6  - C   (60% - 69%)
+// 5  - D   (50% - 59%)
+// 4  - E   (40% - 49%)
+// 3  - F   (30% - 39%)
+// 2  - F   (20% - 29%)
+// 1  - F   (10% - 19%)
+// 0  - F   (0% - 9%)
+// -1 - NA
+
 model IGCSEAlumni {
     id         String    @id @default(cuid())
     name       String
     image      String 
-    grades     String  
+    english    Int
+    emaths     Int
+    amaths     Int
+    chemistry  Int
+    physics    Int
+    biology    Int
+    ict        Int
+    cs         Int
+    business   Int
+    accounting Int
+    economics  Int
+    history    Int
+    geography  Int
+    extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['Psychology', 'Law']  
+    extraSubjectsGrades     Int?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
     classId    String
     class      IGCSEClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
@@ -106,12 +134,38 @@ model ALevelClass {
     @@unique([id])
 }
 
+// Each subject columns represent the corresponding grades
+// 10 - A*  (100%)
+// 9  - A*  (90% - 99%)
+// 8  - A   (80% - 89%)
+// 7  - B   (70% - 79%)
+// 6  - C   (60% - 69%)
+// 5  - D   (50% - 59%)
+// 4  - E   (40% - 49%)
+// 3  - F   (30% - 39%)
+// 2  - F   (20% - 29%)
+// 1  - F   (10% - 19%)
+// 0  - F   (0% - 9%)
+// -1 - NA
+
 model ALevelAlumni {
-    id         String    @id @default(cuid())
-    name       String
-    image      String 
-    grades     String  
-    classId    String
+    id              String    @id @default(cuid())
+    name            String
+    image           String
+    english         Int 
+    pureMaths       Int
+    furtherMaths    Int 
+    physics         Int 
+    chemistry       Int
+    biology         Int
+    it              Int
+    cs              Int
+    business        Int
+    accounting      Int
+    economics       Int
+    extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['Geography', 'History']  
+    extraSubjectsGrades     Int?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
+    classId         String
     class      ALevelClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     @@index([classId])
