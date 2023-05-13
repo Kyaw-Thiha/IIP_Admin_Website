@@ -20,8 +20,6 @@ import {
 } from "@/components/dashboard/dialogs";
 import Link from "next/link";
 
-type IGCSEClass = RouterOutputs["igcseClass"]["get"];
-
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app using the components.",
@@ -90,7 +88,7 @@ export default function AlumniPage() {
                   <CardFooter>
                     <Link
                       className="w-full"
-                      href={`/igcse/${igcseClass.year}/${igcseClass.series}`}
+                      href={`/alumni/igcse/${igcseClass.year}/${igcseClass.series}`}
                     >
                       <Button className="w-full">Browse Alumni</Button>
                     </Link>
