@@ -6,11 +6,11 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 
-export const igcseClassRouter = createTRPCRouter({
+export const alevelClassRouter = createTRPCRouter({
   get: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.iGCSEClass.findFirst({
+      return ctx.prisma.aLevelClass.findFirst({
         where: {
           id: input.id,
         },
@@ -29,7 +29,7 @@ export const igcseClassRouter = createTRPCRouter({
       })
     )
     .query(({ ctx, input }) => {
-      return ctx.prisma.iGCSEClass.findFirst({
+      return ctx.prisma.aLevelClass.findFirst({
         where: {
           year: input.year,
           series: input.series,
@@ -41,7 +41,7 @@ export const igcseClassRouter = createTRPCRouter({
     }),
 
   getAll: publicProcedure.query(({ ctx, input }) => {
-    return ctx.prisma.iGCSEClass.findMany({
+    return ctx.prisma.aLevelClass.findMany({
       orderBy: [{ year: "desc" }, { series: "desc" }],
     });
   }),
@@ -58,7 +58,7 @@ export const igcseClassRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.iGCSEClass.create({
+      return ctx.prisma.aLevelClass.create({
         data: {
           year: input.year,
           series: input.series,
@@ -79,7 +79,7 @@ export const igcseClassRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.iGCSEClass.update({
+      return ctx.prisma.aLevelClass.update({
         where: {
           id: input.id,
         },
@@ -93,7 +93,7 @@ export const igcseClassRouter = createTRPCRouter({
   delete: publicProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.iGCSEClass.delete({
+      return ctx.prisma.aLevelClass.delete({
         where: {
           id: input.id,
         },
