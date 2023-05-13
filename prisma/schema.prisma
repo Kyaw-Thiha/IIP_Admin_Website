@@ -103,7 +103,8 @@ model IGCSEAlumni {
     id         String    @id @default(cuid())
     name       String
     image      String 
-    english    Int
+    esl        Int
+    efl        Int
     emaths     Int
     amaths     Int
     chemistry  Int
@@ -116,7 +117,7 @@ model IGCSEAlumni {
     economics  Int
     history    Int
     geography  Int
-    extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['Psychology', 'Law']  
+    extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['English Literature', 'Law']  
     extraSubjectsGrades     Int?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
     classId    String
     class      IGCSEClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
