@@ -17,7 +17,7 @@ import {
   AddIGCSEClassDialog,
   EditIGCSEClassDialog,
   DeleteIGCSEClassDialog,
-} from "@/components/dashboard/dialogs";
+} from "@/components/dialogs/classDialogs";
 import Link from "next/link";
 
 export const metadata: Metadata = {
