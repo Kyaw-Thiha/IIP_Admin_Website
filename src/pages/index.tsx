@@ -23,7 +23,6 @@ import { Activity, CreditCard, DollarSign, Users } from "lucide-react";
 import { Overview } from "@/components/dashboard/overview";
 import { RecentSales } from "@/components/dashboard/recent-sales";
 
-import TabAlumni from "@/components/dashboard/tab-alumni";
 import Layout from "@/components/layout";
 
 export const metadata: Metadata = {
