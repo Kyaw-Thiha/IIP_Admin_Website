@@ -85,42 +85,43 @@ model IGCSEClass {
     @@unique([id])
 }
 
-// Each subject columns represent the corresponding grades
-// 10 - A*  (100%)
-// 9  - A*  (90% - 99%)
-// 8  - A   (80% - 89%)
-// 7  - B   (70% - 79%)
-// 6  - C   (60% - 69%)
-// 5  - D   (50% - 59%)
-// 4  - E   (40% - 49%)
-// 3  - F   (30% - 39%)
-// 2  - F   (20% - 29%)
-// 1  - F   (10% - 19%)
-// 0  - F   (0% - 9%)
-// -1 - NA
+// Each subject columns represent the corresponding grades 
+// 120 - A*  (100%)
+// 40  - A*  (90% - 99%)
+// 10  - A   (80% - 89%)
+// 8   - B   (70% - 79%)
+// 6   - C   (60% - 69%)
+// 4   - D   (50% - 59%)
+// 2   - E   (40% - 49%)
+// -2  - F   (30% - 39%)
+// -4  - G   (20% - 29%)
+// -6  - U   (10% - 19%)
+// -8  - U   (0% - 9%)
+// 0   - NA
 
 model IGCSEAlumni {
-    id         String    @id @default(cuid())
-    name       String
-    image      String 
-    esl        Int
-    efl        Int
-    emaths     Int
-    amaths     Int
-    chemistry  Int
-    physics    Int
-    biology    Int
-    ict        Int
-    cs         Int
-    business   Int
-    accounting Int
-    economics  Int
-    history    Int
-    geography  Int
+    id              String    @id @default(cuid())
+    name            String
+    image           String 
+    esl             Int
+    efl             Int
+    emaths          Int
+    amaths          Int
+    chemistry       Int
+    physics         Int
+    biology         Int
+    ict             Int
+    cs              Int
+    business        Int
+    accounting      Int
+    economics       Int
+    history         Int
+    geography       Int
+    psychology      Int
+    totalGrades     Int
     extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['English Literature', 'Law']  
-    extraSubjectsGrades     Int?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
-    totalMarks Int
-    classId    String
+    extraSubjectsGrades     String?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
+    classId     String
     class      IGCSEClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     @@index([classId])
@@ -137,18 +138,18 @@ model ALevelClass {
 }
 
 // Each subject columns represent the corresponding grades
-// 10 - A*  (100%)
-// 9  - A*  (90% - 99%)
-// 8  - A   (80% - 89%)
-// 7  - B   (70% - 79%)
-// 6  - C   (60% - 69%)
-// 5  - D   (50% - 59%)
-// 4  - E   (40% - 49%)
-// 3  - F   (30% - 39%)
-// 2  - F   (20% - 29%)
-// 1  - F   (10% - 19%)
-// 0  - F   (0% - 9%)
-// -1 - NA
+// 120 - A*  (100%)
+// 40  - A*  (90% - 99%)
+// 10  - A   (80% - 89%)
+// 8   - B   (70% - 79%)
+// 6   - C   (60% - 69%)
+// 4   - D   (50% - 59%)
+// 2   - E   (40% - 49%)
+// -2  - F   (30% - 39%)
+// -4  - G   (20% - 29%)
+// -6  - U   (10% - 19%)
+// -8  - U   (0% - 9%)
+// 0   - NA
 
 model ALevelAlumni {
     id              String    @id @default(cuid())
@@ -165,9 +166,12 @@ model ALevelAlumni {
     business        Int
     accounting      Int
     economics       Int
-    totalMarks      Int
+    history         Int
+    geography       Int
+    psychology      Int
+    totalGrades     Int
     extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['Geography', 'History']  
-    extraSubjectsGrades     Int?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
+    extraSubjectsGrades     String?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
     classId         String
     class      ALevelClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
