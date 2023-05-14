@@ -35,7 +35,7 @@ export const alevelClassRouter = createTRPCRouter({
           series: input.series,
         },
         include: {
-          alumni: true,
+          alumni: { orderBy: [{ totalGrades: "desc" }, { name: "asc" }] },
         },
       });
     }),
