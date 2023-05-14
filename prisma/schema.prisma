@@ -86,17 +86,17 @@ model IGCSEClass {
 }
 
 // Each subject columns represent the corresponding grades 
-// 120 - A*  (100%)
-// 40  - A*  (90% - 99%)
-// 10  - A   (80% - 89%)
-// 8   - B   (70% - 79%)
+// 360 - A*  (100%)
+// 120 - A*  (90% - 99%)
+// 40  - A   (80% - 89%)
+// 10  - B   (70% - 79%)
 // 6   - C   (60% - 69%)
 // 4   - D   (50% - 59%)
 // 2   - E   (40% - 49%)
 // -2  - F   (30% - 39%)
 // -4  - G   (20% - 29%)
 // -8  - U   (0% - 19%)
-// 0   - NA
+// 0   - N/A
 
 model IGCSEAlumni {
     id              String    @id @default(cuid())
@@ -136,18 +136,18 @@ model ALevelClass {
     @@unique([id])
 }
 
-// Each subject columns represent the corresponding grades
-// 120 - A*  (100%)
-// 40  - A*  (90% - 99%)
-// 10  - A   (80% - 89%)
-// 8   - B   (70% - 79%)
+// Each subject columns represent the corresponding grades 
+// 360 - A*  (100%)
+// 120 - A*  (90% - 99%)
+// 40  - A   (80% - 89%)
+// 10  - B   (70% - 79%)
 // 6   - C   (60% - 69%)
 // 4   - D   (50% - 59%)
 // 2   - E   (40% - 49%)
 // -2  - F   (30% - 39%)
 // -4  - G   (20% - 29%)
 // -8  - U   (0% - 19%)
-// 0   - NA
+// 0   - N/A
 
 model ALevelAlumni {
     id              String    @id @default(cuid())
