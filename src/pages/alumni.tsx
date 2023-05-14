@@ -39,14 +39,6 @@ export default function AlumniPage() {
     undefined // no input
   );
 
-  // const deleteUser = api.user.delete.useMutation({
-  //   onSuccess: () => {
-  //     void signOut({
-  //       callbackUrl: `${window.location.origin}`,
-  //     });
-  //   },
-  // });
-
   const classes = igcseClasses ?? [];
 
   return (
