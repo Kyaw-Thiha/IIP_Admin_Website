@@ -19,7 +19,7 @@ export const igcseAlumniRouter = createTRPCRouter({
 
   getAll: publicProcedure.query(({ ctx, input }) => {
     return ctx.prisma.iGCSEAlumni.findMany({
-      orderBy: [{ name: "desc" }],
+      orderBy: [{ totalGrades: "desc" }, { name: "asc" }],
     });
   }),
 
@@ -43,7 +43,8 @@ export const igcseAlumniRouter = createTRPCRouter({
         economics: z.number(),
         history: z.number(),
         geography: z.number(),
-        totalMarks: z.number(),
+        psychology: z.number(),
+        totalGrades: z.number(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -66,25 +67,8 @@ export const igcseAlumniRouter = createTRPCRouter({
           economics: input.economics,
           history: input.history,
           geography: input.geography,
-          totalMarks: input.totalMarks,
-        },
-      });
-    }),
-
-  editName: publicProcedure
-    .input(
-      z.object({
-        id: z.string(),
-        name: z.string(),
-      })
-    )
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.iGCSEAlumni.update({
-        where: {
-          id: input.id,
-        },
-        data: {
-          name: input.name,
+          psychology: input.psychology,
+          totalGrades: input.totalGrades,
         },
       });
     }),
@@ -107,10 +91,11 @@ export const igcseAlumniRouter = createTRPCRouter({
       });
     }),
 
-  editGrades: publicProcedure
+  edit: publicProcedure
     .input(
       z.object({
         id: z.string(),
+        name: z.string(),
         esl: z.number(),
         efl: z.number(),
         emaths: z.number(),
@@ -125,7 +110,8 @@ export const igcseAlumniRouter = createTRPCRouter({
         economics: z.number(),
         history: z.number(),
         geography: z.number(),
-        totalMarks: z.number(),
+        psychology: z.number(),
+        totalGrades: z.number(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -134,6 +120,7 @@ export const igcseAlumniRouter = createTRPCRouter({
           id: input.id,
         },
         data: {
+          name: input.name,
           esl: input.esl,
           efl: input.efl,
           emaths: input.emaths,
@@ -148,7 +135,8 @@ export const igcseAlumniRouter = createTRPCRouter({
           economics: input.economics,
           history: input.history,
           geography: input.geography,
-          totalMarks: input.totalMarks,
+          psychology: input.psychology,
+          totalGrades: input.totalGrades,
         },
       });
     }),
