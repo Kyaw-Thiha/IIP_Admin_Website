@@ -4,6 +4,7 @@ import { igcseClassRouter } from "./routers/igcseClass";
 import { aLevelClassRouter } from "./routers/aLevelClass";
 import { igcseAlumniRouter } from "./routers/igcseAlumni";
 import { aLevelAlumniRouter } from "./routers/aLevelAlumni";
+import { announcementRouter } from "./routers/announcement";
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   igcseAlumni: igcseAlumniRouter,
   aLevelClass: aLevelClassRouter,
   aLevelAlumni: aLevelAlumniRouter,
+  announcement: announcementRouter,
 });
 
 // export type definition of API
