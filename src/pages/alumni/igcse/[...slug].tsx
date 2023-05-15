@@ -49,7 +49,7 @@ const AlumniList: NextPage = () => {
       <Layout activeValue="alumni">
         <div className="flex items-center justify-between space-y-2">
           <div>
-            Alumni of {series} {year}
+            IGCSE Alumni of {series} {year}
           </div>
           <div className="flex items-center space-x-2">
             <AddIGCSEAlumniDialog
