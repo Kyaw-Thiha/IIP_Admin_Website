@@ -6,7 +6,13 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 
-export const alevelClassRouter = createTRPCRouter({
+export const aLevelClassRouter = createTRPCRouter({
+  getAll: publicProcedure.query(({ ctx, input }) => {
+    return ctx.prisma.aLevelClass.findMany({
+      orderBy: [{ year: "desc" }, { series: "desc" }],
+    });
+  }),
+
   get: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
@@ -22,9 +28,9 @@ export const alevelClassRouter = createTRPCRouter({
       z.object({
         year: z.number(),
         series: z.union([
-          z.literal("Feb/Mar"),
+          z.literal("Jan"),
           z.literal("May/Jun"),
-          z.literal("Oct/Nov"),
+          z.literal("Oct"),
         ]),
       })
     )
@@ -40,20 +46,14 @@ export const alevelClassRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure.query(({ ctx, input }) => {
-    return ctx.prisma.aLevelClass.findMany({
-      orderBy: [{ year: "desc" }, { series: "desc" }],
-    });
-  }),
-
   create: publicProcedure
     .input(
       z.object({
         year: z.number(),
         series: z.union([
-          z.literal("Feb/Mar"),
+          z.literal("Jan"),
           z.literal("May/Jun"),
-          z.literal("Oct/Nov"),
+          z.literal("Oct"),
         ]),
       })
     )
@@ -72,9 +72,9 @@ export const alevelClassRouter = createTRPCRouter({
         id: z.string(),
         year: z.number(),
         series: z.union([
-          z.literal("Feb/Mar"),
+          z.literal("Jan"),
           z.literal("May/Jun"),
-          z.literal("Oct/Nov"),
+          z.literal("Oct"),
         ]),
       })
     )
