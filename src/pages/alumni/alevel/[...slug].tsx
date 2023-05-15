@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   description: "Example dashboard app using the components.",
 };
 
-const AlumniList: NextPage = () => {
+const ALevelAlumniList: NextPage = () => {
   const router = useRouter();
   const [year, month1, month2] = router.query.slug ?? [];
   let series;
@@ -154,4 +154,4 @@ const AlumniList: NextPage = () => {
   );
 };
 
-export default AlumniList;
+export default ALevelAlumniList;

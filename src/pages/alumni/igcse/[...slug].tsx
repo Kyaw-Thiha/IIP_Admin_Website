@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description: "Example dashboard app using the components.",
 };
 
-const AlumniList: NextPage = () => {
+const IGCSEAlumniListPage: NextPage = () => {
   const router = useRouter();
   const [year, month1, month2] = router.query.slug ?? [];
   const series = `${month1 ?? ""}/${month2 ?? ""}`;
@@ -151,4 +151,4 @@ const AlumniList: NextPage = () => {
   );
 };
 
-export default AlumniList;
+export default IGCSEAlumniListPage;
