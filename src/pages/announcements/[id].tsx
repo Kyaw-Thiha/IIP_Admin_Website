@@ -1,11 +1,15 @@
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from "next";
+
 import Layout from "@/components/layout";
 import { api } from "@/utils/api";
 import type { NextPage, Metadata } from "next";
-import { useRouter } from "next/router";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Importing files for react quill
 import "react-quill/dist/quill.bubble.css";
@@ -18,42 +22,28 @@ export const metadata: Metadata = {
   description: "Example dashboard app using the components.",
 };
 
-const AnnouncementPage: NextPage = () => {
-  const router = useRouter();
-  const id = router.query.id ?? "";
-  const { isReady } = router;
+export function getServerSideProps(context: GetServerSidePropsContext) {
+  const id = context.params?.["id"];
 
-  return (
-    <>
-      <Layout activeValue="announcements">
-        <section className="flex items-center justify-center">
-          <div className="mt-12 w-[80vw]">
-            {isReady ? <AlumniEditor id={id as string} /> : <></>}
-          </div>
-        </section>
-      </Layout>
-    </>
-  );
-};
-
-export default AnnouncementPage;
-
-interface Props {
-  id: string;
+  return {
+    props: {
+      id,
+    },
+  };
 }
-const AlumniEditor: React.FC<Props> = (props) => {
-  //Fetching list of worksheets
-  const {
-    data: announcement,
-    refetch,
-    isLoading,
-    isError,
-  } = api.announcement.get.useQuery({
-    id: props.id,
+
+const AnnouncementPage: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ id }) => {
+  const { data, refetch } = api.announcement.get.useQuery({
+    id: id as string,
   });
 
-  const [title, setTitle] = useState(announcement?.title ?? "");
-  const [text, setText] = useState(announcement?.text ?? "");
+  const [title, setTitle] = useState(data?.title ?? "");
+  const [text, setText] = useState(data?.text ?? "");
+
+  useEffect(() => setTitle(data?.title ?? ""), [data?.title]);
+  useEffect(() => setText(data?.text ?? ""), [data?.text]);
 
   //Function to edit the title
   const editTitle = api.announcement.editTitle.useMutation({
@@ -63,8 +53,8 @@ const AlumniEditor: React.FC<Props> = (props) => {
   });
 
   const updateTitle = () => {
-    if (title != "" && title != announcement?.title) {
-      editTitle.mutate({ id: announcement?.id ?? "", title: title });
+    if (title != "" && title != data?.title) {
+      editTitle.mutate({ id: data?.id ?? "", title: title });
     }
   };
 
@@ -82,8 +72,8 @@ const AlumniEditor: React.FC<Props> = (props) => {
   });
 
   const updateText = () => {
-    if (text != "" && text != announcement?.text) {
-      editText.mutate({ id: announcement?.id ?? "", text: text });
+    if (text != "" && text != data?.text) {
+      editText.mutate({ id: data?.id ?? "", text: text });
     }
   };
 
@@ -95,31 +85,39 @@ const AlumniEditor: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div className="grid grid-cols-4 items-center gap-4">
-        <Label htmlFor="title" className="text-center text-lg">
-          Title
-        </Label>
-        <Input
-          id="title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-          className="col-span-3"
-        />
-      </div>
-      <div className="mt-20 flex flex-col gap-8">
-        <Label htmlFor="text" className=" text-left text-lg">
-          Text
-        </Label>
-        <ReactQuill
-          className="min-h-[10vh] border"
-          id="text"
-          theme="bubble"
-          value={text}
-          onChange={setText}
-        />
-      </div>
+      <Layout activeValue="announcements">
+        <section className="flex items-center justify-center">
+          <div className="mt-12 w-[80vw]">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-center text-lg">
+                Title
+              </Label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                className="col-span-3"
+              />
+            </div>
+            <div className="mt-20 flex flex-col gap-8">
+              <Label htmlFor="text" className=" text-left text-lg">
+                Text
+              </Label>
+              <ReactQuill
+                className="min-h-[10vh] border"
+                id="text"
+                theme="bubble"
+                value={text}
+                onChange={setText}
+              />
+            </div>
+          </div>
+        </section>
+      </Layout>
     </>
   );
 };
+
+export default AnnouncementPage;
