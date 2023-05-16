@@ -36,6 +36,7 @@
     "next": "^13.4.1",
     "next-auth": "^4.21.0",
     "react": "18.2.0",
+    "react-autosave": "^0.4.2",
     "react-day-picker": "^8.7.1",
     "react-dom": "18.2.0",
     "react-quill": "^2.0.0",
