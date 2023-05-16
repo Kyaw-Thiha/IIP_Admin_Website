@@ -39,7 +39,7 @@ import { type QueryObserverBaseResult } from "@tanstack/react-query";
 import {
   type GradesType,
   gradeToInt,
-  IntGradesType,
+  type IntGradesType,
   intToGrade,
 } from "@/utils/helpers";
 
