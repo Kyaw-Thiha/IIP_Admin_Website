@@ -63,6 +63,60 @@ export const announcementRouter = createTRPCRouter({
       });
     }),
 
+  editTitle: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.announcement.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+        },
+      });
+    }),
+
+  editText: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        text: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.announcement.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          text: input.text,
+        },
+      });
+    }),
+
+  editImage: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        image: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.announcement.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          image: input.image,
+        },
+      });
+    }),
+
   delete: publicProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
