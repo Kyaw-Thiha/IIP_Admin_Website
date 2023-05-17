@@ -1,11 +1,16 @@
+import { useState } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Command } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { UserAuthForm } from "@/components/authentication/user-auth-form";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Icons } from "@/components/icons";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -13,26 +18,37 @@ export const metadata: Metadata = {
 };
 
 export default function AuthenticationPage() {
+  const { toast } = useToast();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const signInWithCredentials = async () => {
+    setLoading(true);
+    if (email != "" && password != "") {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        callbackUrl: `${window.location.origin}`,
+        redirect: false,
+      });
+
+      if (res?.ok) {
+        toast({
+          description:
+            "There was an error in your authentication. Check your email and password.",
+        });
+      }
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
-      <div className="md:hidden">
-        <Image
-          src="/examples/authentication-light.png"
-          width={1280}
-          height={843}
-          alt="Authentication"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/authentication-dark.png"
-          width={1280}
-          height={843}
-          alt="Authentication"
-          className="hidden dark:block"
-        />
-      </div>
-      <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <Link
+      <div className="container relative hidden h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        {/* <Link
           href="/examples/authentication"
           className={cn(
             buttonVariants({ variant: "ghost", size: "sm" }),
@@ -40,26 +56,30 @@ export default function AuthenticationPage() {
           )}
         >
           Login
-        </Link>
+        </Link> */}
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div
             className="absolute inset-0 bg-cover"
             style={{
-              backgroundImage:
-                "url(https://images.unsplash.com/photo-1590069261209-f8e9b8642343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80)",
+              backgroundImage: "url(/our-team.jpg)",
+              backgroundPosition: "28% 50%",
             }}
           />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <Command className="mr-2 h-6 w-6" /> Acme Inc
+          <div className="relative z-20 flex items-center font-medium">
+            <Image
+              src="/logo_transparent.png"
+              alt="Logo"
+              width={75}
+              height={75}
+              className="mr-2"
+            />
+            <h2 className="text-4xl">IIP</h2>
           </div>
           <div className="relative z-20 mt-auto">
-            <blockquote className="space-y-2">
-              <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before. Highly recommended!&rdquo;
+            <blockquote className="space-y-2 ">
+              <p className="w-auto rounded-sm px-2 py-2 backdrop-blur-sm">
+                Designed with ❤️ by the A-level Team (2021-2023)
               </p>
-              <footer className="text-sm">Sofia Davis</footer>
             </blockquote>
           </div>
         </div>
@@ -68,11 +88,57 @@ export default function AuthenticationPage() {
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
               <p className="text-sm text-muted-foreground">
-                Enter your email below to sign in
+                Enter your email & password below to sign in
               </p>
             </div>
-            <UserAuthForm />
-            <p className="px-8 text-center text-sm text-muted-foreground">
+            {/* User Auth Form */}
+            <div className="grid gap-2">
+              <div className="grid gap-1">
+                <Label className="sr-only" htmlFor="email">
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  autoCorrect="off"
+                  disabled={loading}
+                />
+              </div>
+              <div className="grid gap-1">
+                <Label className="sr-only" htmlFor="password">
+                  Password
+                </Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  disabled={loading}
+                />
+              </div>
+              <Button
+                disabled={loading}
+                onClick={() => {
+                  void signInWithCredentials();
+                }}
+              >
+                {loading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Sign In
+              </Button>
+            </div>
+            {/* <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
                 href="/terms"
@@ -88,6 +154,10 @@ export default function AuthenticationPage() {
                 Privacy Policy
               </Link>
               .
+            </p> */}
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              If you do not have an account, ask the admin to create an account
+              for you
             </p>
           </div>
         </div>
