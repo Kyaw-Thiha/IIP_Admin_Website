@@ -5,6 +5,7 @@ import { aLevelClassRouter } from "./routers/aLevelClass";
 import { igcseAlumniRouter } from "./routers/igcseAlumni";
 import { aLevelAlumniRouter } from "./routers/aLevelAlumni";
 import { announcementRouter } from "./routers/announcement";
+import { userRouter } from "./routers/users";
 
 /**
  * This is the primary router for your server.
@@ -13,6 +14,7 @@ import { announcementRouter } from "./routers/announcement";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
+  user: userRouter,
   igcseClass: igcseClassRouter,
   igcseAlumni: igcseAlumniRouter,
   aLevelClass: aLevelClassRouter,
