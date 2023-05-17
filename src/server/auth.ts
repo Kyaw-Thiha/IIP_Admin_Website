@@ -61,12 +61,12 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        name: { label: "Name", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const { data: user } = api.user.getByName.useQuery({
-          name: credentials?.name ?? "",
+        const { data: user } = api.user.getByEmail.useQuery({
+          email: credentials?.email ?? "",
         });
 
         const isPasswordValid = await bcrypt.compare(
