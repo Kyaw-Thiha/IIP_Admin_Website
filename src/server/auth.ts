@@ -65,8 +65,17 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const { data: user } = api.user.getByEmail.useQuery({
-          email: credentials?.email ?? "",
+        const user = await prisma.user.findFirst({
+          where: {
+            email: credentials?.email,
+          },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            password: true,
+            permission: true,
+          },
         });
 
         const isPasswordValid = await bcrypt.compare(
