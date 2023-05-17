@@ -6,6 +6,9 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 
+import * as bcrypt from "bcrypt";
+// https://www.prisma.io/blog/nestjs-prisma-authentication-7D056s1s0k3l#hashing-passwords
+
 export const userRouter = createTRPCRouter({
   get: publicProcedure
     .input(z.object({ id: z.string() }))
@@ -15,6 +18,7 @@ export const userRouter = createTRPCRouter({
           id: input.id,
         },
         select: {
+          id: true,
           name: true,
           email: true,
           permission: true,
@@ -30,8 +34,10 @@ export const userRouter = createTRPCRouter({
           email: input.email,
         },
         select: {
+          id: true,
           name: true,
           email: true,
+          password: true,
           permission: true,
         },
       });
@@ -48,6 +54,7 @@ export const userRouter = createTRPCRouter({
         { name: "asc" },
       ],
       select: {
+        id: true,
         name: true,
         email: true,
         permission: true,
@@ -66,12 +73,16 @@ export const userRouter = createTRPCRouter({
         editUsers: z.boolean(),
       })
     )
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
+      // Hashing the password
+      const saltRounds = 16;
+      const hashedPassword = await bcrypt.hash(input.password, saltRounds);
+
       return ctx.prisma.user.create({
         data: {
           name: input.name,
           email: input.email,
-          password: input.password,
+          password: hashedPassword,
           permission: {
             create: {
               editAlumni: input.editAlumni,
@@ -125,6 +136,28 @@ export const userRouter = createTRPCRouter({
               editUsers: input.editUsers,
             },
           },
+        },
+      });
+    }),
+
+  changePassword: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        password: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      // Hashing the password
+      const saltRounds = 16;
+      const hashedPassword = await bcrypt.hash(input.password, saltRounds);
+
+      return ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          password: hashedPassword,
         },
       });
     }),
