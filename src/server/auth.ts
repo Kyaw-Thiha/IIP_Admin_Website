@@ -9,6 +9,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
+import { api } from "@/utils/api";
+import * as bcrypt from "bcrypt";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -60,14 +62,20 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+      async authorize(credentials, req) {
+        const { data: user } = api.user.getByEmail.useQuery({
+          email: credentials?.email ?? "",
+        });
 
-        if (user) {
+        const isPasswordValid = await bcrypt.compare(
+          credentials?.password ?? "",
+          user?.password ?? ""
+        );
+
+        if (user && isPasswordValid) {
           // Any object returned will be saved in `user` property of the JWT
           return user;
         } else {
