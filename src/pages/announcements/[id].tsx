@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import "react-quill/dist/quill.bubble.css";
 import dynamic from "next/dynamic";
 import { useAutosave } from "react-autosave";
+import { UploadFile } from "@/components/ui/upload-file";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export const metadata: Metadata = {
@@ -41,6 +42,7 @@ const AnnouncementPage: NextPage<
 
   const [title, setTitle] = useState(data?.title ?? "");
   const [text, setText] = useState(data?.text ?? "");
+  const [file, setFile] = useState(data?.image ?? "");
 
   useEffect(() => setTitle(data?.title ?? ""), [data?.title]);
   useEffect(() => setText(data?.text ?? ""), [data?.text]);
@@ -101,6 +103,7 @@ const AnnouncementPage: NextPage<
                 className="col-span-3"
               />
             </div>
+            {/* <UploadFile file={file} setFile={setFile} /> */}
             <div className="mt-20 flex flex-col gap-8">
               <Label htmlFor="text" className=" text-left text-lg">
                 Text
