@@ -8,6 +8,7 @@ import TeamSwitcher from "@/components/dashboard/team-switcher";
 import { UserNav } from "@/components/dashboard/user-nav";
 
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -20,6 +21,10 @@ interface Props {
 }
 
 export default function Layout(props: Props) {
+  const { data: session } = useSession();
+  console.log("session: ", session);
+  console.log(session?.user.id);
+
   return (
     <>
       <div className="md:hidden">
