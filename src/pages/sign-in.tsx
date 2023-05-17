@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/icons";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/router";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default function AuthenticationPage() {
+  const router = useRouter();
   const { toast } = useToast();
 
   const [email, setEmail] = useState("");
@@ -26,23 +28,29 @@ export default function AuthenticationPage() {
 
   const signInWithCredentials = async () => {
     setLoading(true);
+
     if (email != "" && password != "") {
       const res = await signIn("credentials", {
         email,
         password,
-        callbackUrl: `${window.location.origin}`,
+        callbackUrl: `${window.location.origin}/`,
         redirect: false,
       });
 
-      if (res?.ok) {
+      if (!res?.ok) {
         toast({
           description:
             "There was an error in your authentication. Check your email and password.",
         });
-      }
-    }
 
-    setLoading(false);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        void router.replace("/");
+      }
+
+      console.log(res);
+    }
   };
 
   return (
