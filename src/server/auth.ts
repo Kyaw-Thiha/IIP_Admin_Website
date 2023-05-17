@@ -7,7 +7,6 @@ import {
 import DiscordProvider from "next-auth/providers/discord";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { api } from "@/utils/api";
 import * as bcrypt from "bcrypt";
@@ -62,12 +61,12 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        email: { label: "Email", type: "email" },
+        name: { label: "Name", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const { data: user } = api.user.getByEmail.useQuery({
-          email: credentials?.email ?? "",
+        const { data: user } = api.user.getByName.useQuery({
+          name: credentials?.name ?? "",
         });
 
         const isPasswordValid = await bcrypt.compare(

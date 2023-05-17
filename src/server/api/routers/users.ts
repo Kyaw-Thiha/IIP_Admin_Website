@@ -20,18 +20,17 @@ export const userRouter = createTRPCRouter({
         select: {
           id: true,
           name: true,
-          email: true,
           permission: true,
         },
       });
     }),
 
-  getByEmail: publicProcedure
-    .input(z.object({ email: z.string() }))
+  getByName: publicProcedure
+    .input(z.object({ name: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.prisma.user.findFirst({
         where: {
-          email: input.email,
+          name: input.name,
         },
         select: {
           id: true,
@@ -56,7 +55,6 @@ export const userRouter = createTRPCRouter({
       select: {
         id: true,
         name: true,
-        email: true,
         permission: true,
       },
     });
@@ -66,7 +64,6 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
-        email: z.string(),
         password: z.string(),
         editAlumni: z.boolean(),
         editAnnouncements: z.boolean(),
@@ -81,7 +78,6 @@ export const userRouter = createTRPCRouter({
       return ctx.prisma.user.create({
         data: {
           name: input.name,
-          email: input.email,
           password: hashedPassword,
           permission: {
             create: {
@@ -99,7 +95,6 @@ export const userRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string(),
-        email: z.string(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -109,7 +104,6 @@ export const userRouter = createTRPCRouter({
         },
         data: {
           name: input.name,
-          email: input.email,
         },
       });
     }),
