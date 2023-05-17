@@ -18,5 +18,8 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  experimental: {
+    esmExternals: false, // This is flagged false for UploadThing
+  },
 };
 export default config;
