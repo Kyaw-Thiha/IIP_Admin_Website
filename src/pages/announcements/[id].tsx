@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 
 // Importing files for react quill
-import "react-quill/dist/quill.bubble.css";
+import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { useAutosave } from "react-autosave";
 import { UploadFile } from "@/components/ui/upload-file";
@@ -105,7 +105,7 @@ const AnnouncementPage: NextPage<
   return (
     <>
       <Layout activeValue="announcements">
-        <section className="flex items-center justify-center">
+        <section className="mb-48 flex items-center justify-center">
           <div className="mt-12 w-[80vw]">
             <div className="grid grid-cols-2 items-center justify-center gap-8">
               <div className="grid grid-cols-4 items-center gap-4 ">
@@ -149,7 +149,7 @@ const AnnouncementPage: NextPage<
               <ReactQuill
                 className="min-h-[10vh] border"
                 id="text"
-                theme="bubble"
+                theme="snow"
                 value={text}
                 onChange={setText}
               />
