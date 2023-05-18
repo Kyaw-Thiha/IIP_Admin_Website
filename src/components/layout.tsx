@@ -8,7 +8,8 @@ import TeamSwitcher from "@/components/dashboard/team-switcher";
 import { UserNav } from "@/components/dashboard/user-nav";
 
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "./ui/button";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -22,8 +23,6 @@ interface Props {
 
 export default function Layout(props: Props) {
   const { data: session } = useSession();
-  console.log("session: ", session);
-  console.log(session?.user.id);
 
   return (
     <>
@@ -49,8 +48,21 @@ export default function Layout(props: Props) {
             <TeamSwitcher />
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
-              <Search />
-              <UserNav />
+              {/* <Search />
+              <UserNav /> */}
+              {session ? (
+                <>
+                  <Button
+                    onClick={() => {
+                      void signOut();
+                    }}
+                  >
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
