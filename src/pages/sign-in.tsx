@@ -4,12 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 
-import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/icons";
-import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/router";
 
@@ -22,8 +20,8 @@ export default function AuthenticationPage() {
   const router = useRouter();
   const { toast } = useToast();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("super-secret");
   const [loading, setLoading] = useState(false);
 
   const signInWithCredentials = async () => {
@@ -49,7 +47,7 @@ export default function AuthenticationPage() {
         void router.replace("/");
       }
 
-      console.log(res);
+      return res;
     }
   };
 
