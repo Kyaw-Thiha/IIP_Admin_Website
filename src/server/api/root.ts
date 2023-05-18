@@ -1,5 +1,4 @@
 import { createTRPCRouter } from "@/server/api/trpc";
-import { exampleRouter } from "@/server/api/routers/example";
 import { igcseClassRouter } from "./routers/igcseClass";
 import { aLevelClassRouter } from "./routers/aLevelClass";
 import { igcseAlumniRouter } from "./routers/igcseAlumni";
@@ -13,7 +12,6 @@ import { userRouter } from "./routers/users";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  example: exampleRouter,
   user: userRouter,
   igcseClass: igcseClassRouter,
   igcseAlumni: igcseAlumniRouter,
