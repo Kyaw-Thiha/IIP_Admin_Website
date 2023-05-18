@@ -20,8 +20,8 @@ export default function AuthenticationPage() {
   const router = useRouter();
   const { toast } = useToast();
 
-  const [email, setEmail] = useState("admin@gmail.com");
-  const [password, setPassword] = useState("super-secret");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const signInWithCredentials = async () => {

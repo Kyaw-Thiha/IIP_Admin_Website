@@ -3,6 +3,7 @@ import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
+  CookiesOptions,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -32,6 +33,29 @@ declare module "next-auth" {
   // }
 }
 
+// https://www.youtube.com/watch?v=fYObrr3jf0w
+// https://remaster.com/blog/next-auth-jwt-session
+
+const cookies: Partial<CookiesOptions> = {
+  sessionToken: {
+    name: `next-auth.session-token`,
+    options: {
+      httpOnly: true,
+      sameSite: "none",
+      path: "/",
+      domain: process.env.NEXT_PUBLIC_DOMAIN,
+      secure: true,
+    },
+  },
+  callbackUrl: {
+    name: `next-auth.callback-url`,
+    options: {},
+  },
+  csrfToken: {
+    name: "next-auth.csrf-token",
+    options: {},
+  },
+};
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
@@ -41,14 +65,27 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/sign-in",
   },
+  session: {
+    strategy: "jwt",
+    // maxAge: 3000,
+  },
+  cookies: cookies,
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    // session: ({ session, user }) => ({
+    //   ...session,
+    //   user: {
+    //     ...session.user,
+    //     id: user.id,
+    //   },
+    // }),
+    jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    session({ session, token, user }) {
+      session.user = user;
+
+      return session;
+    },
   },
   adapter: PrismaAdapter(prisma),
   providers: [
