@@ -10,6 +10,7 @@ import { UserNav } from "@/components/dashboard/user-nav";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
+import { api } from "@/utils/api";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -23,6 +24,9 @@ interface Props {
 
 export default function Layout(props: Props) {
   const { data: session } = useSession();
+  const { data: user, refetch } = api.user.getCurrentUser.useQuery(
+    undefined // no input
+  );
 
   return (
     <>
@@ -79,20 +83,27 @@ export default function Layout(props: Props) {
           </div>
           <Tabs defaultValue={props.activeValue} className="space-y-4">
             <TabsList>
-              <Link href="/">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-              </Link>
-              <Link href="/alumni">
-                <TabsTrigger value="alumni">Alumni</TabsTrigger>
-              </Link>
-              <Link href="/announcements">
-                <TabsTrigger value="announcements">Announcements</TabsTrigger>
-              </Link>
-              <Link href="/users">
-                <TabsTrigger value="users" disabled>
-                  Users
-                </TabsTrigger>
-              </Link>
+              <TabsTrigger value="overview">
+                <Link href="/">Overview </Link>
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="alumni"
+                disabled={user?.permission?.editAlumni}
+              >
+                <Link href="/alumni">Alumni</Link>
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="announcements"
+                disabled={user?.permission?.editAnnouncements}
+              >
+                <Link href="/announcements">Announcements </Link>
+              </TabsTrigger>
+
+              <TabsTrigger value="users" disabled={user?.permission?.editUsers}>
+                <Link href="/users">Users</Link>
+              </TabsTrigger>
             </TabsList>
             <TabsContent value={props.activeValue} className="space-y-4">
               {props.children}
