@@ -23,7 +23,7 @@ export const igcseAlumniRouter = createTRPCRouter({
     });
   }),
 
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         name: z.string(),
@@ -73,7 +73,7 @@ export const igcseAlumniRouter = createTRPCRouter({
       });
     }),
 
-  editImage: publicProcedure
+  editImage: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -91,7 +91,7 @@ export const igcseAlumniRouter = createTRPCRouter({
       });
     }),
 
-  edit: publicProcedure
+  edit: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -141,7 +141,7 @@ export const igcseAlumniRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.iGCSEAlumni.delete({

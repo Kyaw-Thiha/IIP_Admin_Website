@@ -77,7 +77,7 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         name: z.string(),
@@ -108,7 +108,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  edit: publicProcedure
+  edit: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -138,7 +138,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  changePassword: publicProcedure
+  changePassword: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -160,7 +160,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.user.delete({

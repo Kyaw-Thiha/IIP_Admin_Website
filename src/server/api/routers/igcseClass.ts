@@ -48,7 +48,7 @@ export const igcseClassRouter = createTRPCRouter({
     });
   }),
 
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         year: z.number(),
@@ -68,7 +68,7 @@ export const igcseClassRouter = createTRPCRouter({
       });
     }),
 
-  edit: publicProcedure
+  edit: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -92,7 +92,7 @@ export const igcseClassRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.iGCSEClass.delete({

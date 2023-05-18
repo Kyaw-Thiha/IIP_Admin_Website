@@ -41,7 +41,7 @@ export const announcementRouter = createTRPCRouter({
       });
     }),
 
-  edit: publicProcedure
+  edit: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -63,7 +63,7 @@ export const announcementRouter = createTRPCRouter({
       });
     }),
 
-  editTitle: publicProcedure
+  editTitle: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -81,7 +81,7 @@ export const announcementRouter = createTRPCRouter({
       });
     }),
 
-  editText: publicProcedure
+  editText: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -99,7 +99,7 @@ export const announcementRouter = createTRPCRouter({
       });
     }),
 
-  editImage: publicProcedure
+  editImage: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -117,7 +117,7 @@ export const announcementRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.announcement.delete({
