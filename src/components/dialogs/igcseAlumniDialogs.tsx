@@ -42,6 +42,7 @@ import {
   type IntGradesType,
   intToGrade,
 } from "@/utils/helpers";
+import { UploadFile } from "../ui/upload-file";
 
 type IGCSEAlumni = RouterOutputs["igcseAlumni"]["get"];
 
@@ -53,6 +54,7 @@ interface AddDialogProps {
 export const AddIGCSEAlumniDialog: React.FC<AddDialogProps> = (props) => {
   // State variables and setters to store grades of each subjects
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [esl, setESL] = useState("-" as GradesType);
   const [efl, setEFL] = useState("-" as GradesType);
   const [emaths, setEMaths] = useState("-" as GradesType);
@@ -194,6 +196,16 @@ export const AddIGCSEAlumniDialog: React.FC<AddDialogProps> = (props) => {
     });
   };
 
+  const onImageUploaded = (fileUrl: string) => {
+    setImage(fileUrl);
+  };
+
+  // Function to remove image
+  const deleteImage = () => {
+    // Need to implement the logic of actually deleting the image in uploadthing
+    setImage("");
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -222,6 +234,27 @@ export const AddIGCSEAlumniDialog: React.FC<AddDialogProps> = (props) => {
               }}
               className="col-span-3"
             />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right">Image</Label>
+            <div className="col-span-3 flex flex-col gap-4">
+              <UploadFile
+                file={image}
+                onUploadComplete={onImageUploaded}
+                alt={`Image of ${name}`}
+              />
+              {image != "" ? (
+                <Button
+                  onClick={() => {
+                    deleteImage();
+                  }}
+                >
+                  Remove Image
+                </Button>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
           {subjects.map((subject) => {
             return (
@@ -411,7 +444,7 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
     },
   });
 
-  const addIGCSEAlumni = () => {
+  const confirm = () => {
     editIGCSEAlumni.mutate({
       id: props.alumni?.id ?? "",
       name: name,
@@ -449,6 +482,22 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
     });
   };
 
+  // Function to edit the imaage
+  const editImage = api.igcseAlumni.editImage.useMutation({
+    onSuccess: () => {
+      void props.refetch();
+    },
+  });
+  const onImageUploaded = (fileUrl: string) => {
+    editImage.mutate({ id: props.alumni?.id ?? "", image: fileUrl });
+  };
+
+  // Function to remove image
+  const deleteImage = () => {
+    // Need to implement the logic of actually deleting the image in uploadthing
+    editImage.mutate({ id: props.alumni?.id ?? "", image: "" });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -458,9 +507,9 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
       </DialogTrigger>
       <DialogContent className="h-[80vh] overflow-y-scroll sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add IGCSE Alumni</DialogTitle>
+          <DialogTitle>Edit IGCSE Alumni</DialogTitle>
           <DialogDescription>
-            Enter data for new IGCSE alumni here. Click save when you are done.
+            Enter data for IGCSE alumni here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -476,6 +525,27 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
               }}
               className="col-span-3"
             />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right">Image</Label>
+            <div className="col-span-3 flex flex-col gap-4">
+              <UploadFile
+                file={props.alumni?.image ?? ""}
+                onUploadComplete={onImageUploaded}
+                alt={`Image of ${props.alumni?.name ?? ""}`}
+              />
+              {props.alumni?.image != "" ? (
+                <Button
+                  onClick={() => {
+                    deleteImage();
+                  }}
+                >
+                  Remove Image
+                </Button>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
           {subjects.map((subject) => {
             return (
@@ -515,7 +585,7 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
         </div>
         <DialogFooter>
           <DialogTrigger asChild>
-            <Button type="submit" onClick={addIGCSEAlumni}>
+            <Button type="submit" onClick={confirm}>
               Save
             </Button>
           </DialogTrigger>
