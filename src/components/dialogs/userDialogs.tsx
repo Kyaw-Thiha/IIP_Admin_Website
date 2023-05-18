@@ -306,6 +306,81 @@ export const EditUserDialog: React.FC<EditDialogProps> = (props) => {
   );
 };
 
+export const ChangePasswordDialog: React.FC<EditDialogProps> = (props) => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
+
+  const editUser = api.user.changePassword.useMutation({
+    onSuccess: () => {
+      void props.refetch();
+    },
+  });
+
+  const confirm = () => {
+    editUser.mutate({
+      id: props.user?.id ?? "",
+      oldPassword: oldPassword,
+      password: password,
+    });
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button size="sm">
+          <Edit className="mr-2 h-4 w-4" />
+          Password
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit User</DialogTitle>
+          <DialogDescription>
+            Enter old and new password here. Click confirm when you are done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="old-password" className="text-right">
+              Old Password
+            </Label>
+            <Input
+              id="old-password"
+              value={oldPassword}
+              onChange={(e) => {
+                setOldPassword(e.target.value);
+              }}
+              className="col-span-3"
+              type="password"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="password" className="text-right">
+              Password
+            </Label>
+            <Input
+              id="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              className="col-span-3"
+              type="password"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <DialogTrigger asChild>
+            <Button type="submit" onClick={confirm}>
+              Confirm Changes
+            </Button>
+          </DialogTrigger>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 export const DeleteUserDialog: React.FC<EditDialogProps> = (props) => {
   const deleteUser = api.user.delete.useMutation({
     onSuccess: () => {

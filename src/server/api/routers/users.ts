@@ -138,26 +138,36 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  changePassword: protectedProcedure
+  changePassword: publicProcedure
     .input(
       z.object({
         id: z.string(),
+        oldPassword: z.string(),
         password: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // Hashing the password
-      const saltRounds = 16;
-      const hashedPassword = await bcrypt.hash(input.password, saltRounds);
+      const user = await ctx.prisma.user.findFirst({ where: { id: input.id } });
 
-      return ctx.prisma.user.update({
-        where: {
-          id: input.id,
-        },
-        data: {
-          password: hashedPassword,
-        },
-      });
+      const isSamePassword = await bcrypt.compare(
+        input.oldPassword,
+        user?.password ?? ""
+      );
+
+      if (isSamePassword) {
+        // Hashing the password
+        const saltRounds = 16;
+        const hashedPassword = await bcrypt.hash(input.password, saltRounds);
+
+        return ctx.prisma.user.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            password: hashedPassword,
+          },
+        });
+      }
     }),
 
   delete: protectedProcedure

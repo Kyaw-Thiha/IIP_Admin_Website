@@ -16,6 +16,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Check, ShieldClose } from "lucide-react";
 import {
   AddUserDialog,
+  ChangePasswordDialog,
   DeleteUserDialog,
   EditUserDialog,
 } from "@/components/dialogs/userDialogs";
@@ -94,6 +95,7 @@ const UsersListPage: NextPage = () => {
                   <TableCell className="text-right">
                     <div className="flex w-full justify-center gap-2 ">
                       <EditUserDialog user={user} refetch={refetch} />
+                      <ChangePasswordDialog user={user} refetch={refetch} />
                       <DeleteUserDialog user={user} refetch={refetch} />
                     </div>
                   </TableCell>
