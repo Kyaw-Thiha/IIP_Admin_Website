@@ -49,8 +49,19 @@ export default function Layout(props: Props) {
       <div className="hidden flex-col md:flex">
         <div className="border-b">
           <div className="flex h-16 items-center px-4">
-            <TeamSwitcher />
-            <MainNav className="mx-6" />
+            {/* <TeamSwitcher />
+            <MainNav className="mx-6" /> */}
+            <div className="flex flex-row items-center rounded-md bg-black px-2">
+              <Image
+                src="/logo_transparent.png"
+                alt="Logo"
+                width={50}
+                height={50}
+                className="mr-1"
+              />
+              <h2 className="text-2xl font-medium text-white">IIP</h2>
+            </div>
+
             <div className="ml-auto flex items-center space-x-4">
               {/* <Search />
               <UserNav /> */}
