@@ -44,21 +44,19 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  getCurrentUser: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.prisma.user.findFirst({
-        where: {
-          id: ctx.session?.user.id,
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          permission: true,
-        },
-      });
-    }),
+  getCurrentUser: publicProcedure.query(({ ctx, input }) => {
+    return ctx.prisma.user.findFirst({
+      where: {
+        id: ctx.session?.user.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        permission: true,
+      },
+    });
+  }),
 
   getAll: publicProcedure.query(({ ctx, input }) => {
     return ctx.prisma.user.findMany({
