@@ -24,6 +24,7 @@ import { Overview } from "@/components/dashboard/overview";
 import { RecentSales } from "@/components/dashboard/recent-sales";
 
 import Layout from "@/components/layout";
+import useAuthRedirect from "@/utils/auth";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -31,6 +32,8 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
+  useAuthRedirect();
+
   return (
     <>
       <Layout activeValue="overview">
