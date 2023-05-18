@@ -114,24 +114,6 @@ export const userRouter = createTRPCRouter({
         id: z.string(),
         name: z.string(),
         email: z.string(),
-      })
-    )
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.user.update({
-        where: {
-          id: input.id,
-        },
-        data: {
-          name: input.name,
-          email: input.email,
-        },
-      });
-    }),
-
-  editPermissions: publicProcedure
-    .input(
-      z.object({
-        id: z.string(),
         editAnnouncements: z.boolean(),
         editAlumni: z.boolean(),
         editUsers: z.boolean(),
@@ -143,6 +125,8 @@ export const userRouter = createTRPCRouter({
           id: input.id,
         },
         data: {
+          name: input.name,
+          email: input.email,
           permission: {
             update: {
               editAlumni: input.editAlumni,
