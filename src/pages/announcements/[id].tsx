@@ -86,7 +86,7 @@ const AnnouncementPage: NextPage<
     onSave: updateText,
   });
 
-  // Function to edit the text
+  // Function to add the image
   const editImage = api.announcement.editImage.useMutation({
     onSuccess: () => {
       void refetch();
