@@ -88,17 +88,17 @@ export default function Layout(props: Props) {
               </TabsTrigger>
 
               <TabsTrigger
-                value="alumni"
-                disabled={user?.permission?.editAlumni}
-              >
-                <Link href="/alumni">Alumni</Link>
-              </TabsTrigger>
-
-              <TabsTrigger
                 value="announcements"
                 disabled={user?.permission?.editAnnouncements}
               >
                 <Link href="/announcements">Announcements </Link>
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="alumni"
+                disabled={user?.permission?.editAlumni}
+              >
+                <Link href="/alumni">Alumni</Link>
               </TabsTrigger>
 
               <TabsTrigger value="users" disabled={user?.permission?.editUsers}>
