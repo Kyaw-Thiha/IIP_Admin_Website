@@ -23,7 +23,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
     });
   }),
 
-  create: protectedProcedure
+  create: publicProcedure
     .input(
       z.object({
         name: z.string(),
@@ -71,7 +71,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
       });
     }),
 
-  editImage: protectedProcedure
+  editImage: publicProcedure
     .input(
       z.object({
         id: z.string(),
@@ -89,7 +89,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
       });
     }),
 
-  edit: protectedProcedure
+  edit: publicProcedure
     .input(
       z.object({
         id: z.string(),
@@ -137,7 +137,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
       });
     }),
 
-  delete: protectedProcedure
+  delete: publicProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.aLevelAlumni.delete({

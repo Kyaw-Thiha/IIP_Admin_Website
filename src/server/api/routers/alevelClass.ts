@@ -46,7 +46,7 @@ export const aLevelClassRouter = createTRPCRouter({
       });
     }),
 
-  create: protectedProcedure
+  create: publicProcedure
     .input(
       z.object({
         year: z.number(),
@@ -66,7 +66,7 @@ export const aLevelClassRouter = createTRPCRouter({
       });
     }),
 
-  edit: protectedProcedure
+  edit: publicProcedure
     .input(
       z.object({
         id: z.string(),
@@ -90,7 +90,7 @@ export const aLevelClassRouter = createTRPCRouter({
       });
     }),
 
-  delete: protectedProcedure
+  delete: publicProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.aLevelClass.delete({
