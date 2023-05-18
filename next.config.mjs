@@ -21,5 +21,15 @@ const config = {
   experimental: {
     esmExternals: false, // This is flagged false for UploadThing
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "uploadthing.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 export default config;

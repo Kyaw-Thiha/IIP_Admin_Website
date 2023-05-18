@@ -16,6 +16,7 @@ import "react-quill/dist/quill.bubble.css";
 import dynamic from "next/dynamic";
 import { useAutosave } from "react-autosave";
 import { UploadFile } from "@/components/ui/upload-file";
+import { Button } from "@/components/ui/button";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export const metadata: Metadata = {
@@ -42,7 +43,7 @@ const AnnouncementPage: NextPage<
 
   const [title, setTitle] = useState(data?.title ?? "");
   const [text, setText] = useState(data?.text ?? "");
-  const [file, setFile] = useState(data?.image ?? "");
+  // const [file, setFile] = useState(data?.image ?? "");
 
   useEffect(() => setTitle(data?.title ?? ""), [data?.title]);
   useEffect(() => setText(data?.text ?? ""), [data?.text]);
@@ -85,25 +86,62 @@ const AnnouncementPage: NextPage<
     onSave: updateText,
   });
 
+  // Function to edit the text
+  const editImage = api.announcement.editImage.useMutation({
+    onSuccess: () => {
+      void refetch();
+    },
+  });
+  const onImageUploaded = (fileUrl: string) => {
+    editImage.mutate({ id: data?.id ?? "", image: fileUrl });
+  };
+
+  // Function to remove image
+  const deleteImage = () => {
+    // Need to implement the logic of actually deleting the image in uploadthing
+    editImage.mutate({ id: data?.id ?? "", image: "" });
+  };
+
   return (
     <>
       <Layout activeValue="announcements">
         <section className="flex items-center justify-center">
           <div className="mt-12 w-[80vw]">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="title" className="text-center text-lg">
-                Title
-              </Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-                className="col-span-3"
-              />
+            <div className="grid grid-cols-2 items-center justify-center gap-8">
+              <div className="grid grid-cols-4 items-center gap-4 ">
+                <Label htmlFor="title" className="text-center text-lg">
+                  Title
+                </Label>
+                <Input
+                  id="title"
+                  value={title}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="flex flex-col items-center justify-center gap-8">
+                <Label className=" text-lg">Image</Label>
+                <UploadFile
+                  file={data?.image ?? ""}
+                  onUploadComplete={onImageUploaded}
+                  alt="Announcement Image"
+                />
+                {data?.image != "" ? (
+                  <Button
+                    onClick={() => {
+                      deleteImage();
+                    }}
+                  >
+                    Remove Image
+                  </Button>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
-            {/* <UploadFile file={file} setFile={setFile} /> */}
+
             <div className="mt-20 flex flex-col gap-8">
               <Label htmlFor="text" className=" text-left text-lg">
                 Text

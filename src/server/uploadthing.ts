@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
+import { prisma } from "./db";
+import { getSession, useSession } from "next-auth/react";
 const f = createUploadthing();
 
 const auth = (req: NextApiRequest, res: NextApiResponse) => ({ id: "fakeId" }); // Fake auth function
@@ -9,25 +11,25 @@ export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   imageUploader: f
     // Set permissions and file types for this FileRoute
-    .fileTypes(["image", "video"])
+    .fileTypes(["image" /*, "video"*/])
     .maxSize("1GB")
-    .middleware(
-      /*async*/ (req, res) => {
-        // This code runs on your server before upload
-        //   const user = await auth(req, res);
-        const user = auth(req, res);
+    .middleware((req, res) => {
+      // const session = await getSession({ req });
 
-        // If you throw, the user will not be able to upload
-        if (!user) throw new Error("Unauthorized");
+      // // This code runs on your server before upload
+      // const user = session?.user;
 
-        // Whatever is returned here is accessible in onUploadComplete as `metadata`
-        return { userId: user.id };
-      }
-    )
+      // // If you throw, the user will not be able to upload
+      // if (!session) throw new Error("Unauthorized");
+
+      // // Whatever is returned here is accessible in onUploadComplete as `metadata`
+      // return { userId: user?.id };
+      return {};
+    })
     .onUploadComplete(
       /*async*/ ({ metadata, file }) => {
         // This code RUNS ON YOUR SERVER after upload
-        console.log("Upload complete for userId:", metadata.userId);
+        console.log("Upload complete for:", metadata);
 
         console.log("file url", file.url);
       }
