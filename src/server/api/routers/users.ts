@@ -83,8 +83,8 @@ export const userRouter = createTRPCRouter({
         name: z.string(),
         email: z.string(),
         password: z.string(),
-        editAlumni: z.boolean(),
         editAnnouncements: z.boolean(),
+        editAlumni: z.boolean(),
         editUsers: z.boolean(),
       })
     )
@@ -132,8 +132,8 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        editAlumni: z.boolean(),
         editAnnouncements: z.boolean(),
+        editAlumni: z.boolean(),
         editUsers: z.boolean(),
       })
     )
