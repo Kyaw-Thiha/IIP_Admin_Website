@@ -40,7 +40,7 @@ const UsersListPage: NextPage = () => {
 
   return (
     <>
-      <Layout activeValue="alumni">
+      <Layout activeValue="users">
         <div className="flex items-center justify-between space-y-2">
           <div>Users</div>
           <div className="flex items-center space-x-2">
