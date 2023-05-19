@@ -9,7 +9,7 @@ import { CalendarDateRangePicker } from "@/components/dashboard/date-range-picke
 import { MainNav } from "@/components/dashboard/main-nav";
 
 import { Search } from "@/components/dashboard/search";
-import TeamSwitcher from "@/components/dashboard/team-switcher";
+// import TeamSwitcher from "@/components/dashboard/team-switcher";
 import { UserNav } from "@/components/dashboard/user-nav";
 
 import {
