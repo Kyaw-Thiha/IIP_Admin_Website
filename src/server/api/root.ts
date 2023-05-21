@@ -1,7 +1,7 @@
 import { createTRPCRouter } from "@/server/api/trpc";
 import { igcseClassRouter } from "@/server/api/routers/igcseClass";
 import { igcseAlumniRouter } from "@/server/api/routers/igcseAlumni";
-import { aLevelClassRouter } from "@/server/api/routers/aLevelClass";
+import { aLevelClassRouter } from "@/server/api/routers/alevelClass";
 import { aLevelAlumniRouter } from "@/server/api/routers/aLevelAlumni";
 import { announcementRouter } from "@/server/api/routers/announcement";
 import { userRouter } from "@/server/api/routers/users";
