@@ -46,6 +46,19 @@ export const aLevelClassRouter = createTRPCRouter({
       });
     }),
 
+  getLatestTopThree: publicProcedure.query(({ ctx, input }) => {
+    return ctx.prisma.aLevelClass.findMany({
+      select: {
+        alumni: {
+          orderBy: [{ totalGrades: "desc" }, { name: "asc" }],
+          take: 3,
+        },
+      },
+      orderBy: [{ year: "desc" }, { series: "desc" }],
+      take: 1,
+    });
+  }),
+
   create: publicProcedure
     .input(
       z.object({

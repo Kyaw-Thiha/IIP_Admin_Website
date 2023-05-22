@@ -7,6 +7,12 @@ import {
 } from "@/server/api/trpc";
 
 export const igcseClassRouter = createTRPCRouter({
+  getAll: publicProcedure.query(({ ctx, input }) => {
+    return ctx.prisma.iGCSEClass.findMany({
+      orderBy: [{ year: "desc" }, { series: "desc" }],
+    });
+  }),
+
   get: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
@@ -42,9 +48,16 @@ export const igcseClassRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure.query(({ ctx, input }) => {
+  getLatestTopThree: publicProcedure.query(({ ctx, input }) => {
     return ctx.prisma.iGCSEClass.findMany({
+      select: {
+        alumni: {
+          orderBy: [{ totalGrades: "desc" }, { name: "asc" }],
+          take: 3,
+        },
+      },
       orderBy: [{ year: "desc" }, { series: "desc" }],
+      take: 1,
     });
   }),
 
