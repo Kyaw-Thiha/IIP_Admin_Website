@@ -42,6 +42,7 @@
     "lucide-react": "^0.216.0",
     "next": "^13.4.1",
     "next-auth": "^4.21.0",
+    "nextjs-cors": "^2.1.2",
     "react": "18.2.0",
     "react-autosave": "^0.4.2",
     "react-day-picker": "^8.7.1",

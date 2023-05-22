@@ -3,11 +3,19 @@ import { appRouter } from "@/server/api/root";
 import { createTRPCContext } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { getHTTPStatusCodeFromError } from "@trpc/server/http";
+import NextCors from "nextjs-cors";
 
 const igcseClassLatestTopThreeHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  // Configuring the CORS
+  await NextCors(req, res, {
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
+
   // Create context and caller
   const ctx = await createTRPCContext({ req, res });
   const caller = appRouter.createCaller(ctx);
