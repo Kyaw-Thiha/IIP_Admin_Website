@@ -19,9 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    // Enabled implicit any to allow successful builds
-    "noImplicitAny": false
+    }
   },
   "include": [
     ".eslintrc.cjs",

@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    // Enabled implicit any to allow successful builds
+    "noImplicitAny": false
+  }
+}

@@ -32,9 +32,22 @@ const config = {
     // "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
 
     // These are disabled rules in order to allow successful builds
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/consistent-type-imports": "off",
-    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-unused-vars":
+      process.env.NODE_ENV === "production"
+        ? "off"
+        : ["warn", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/consistent-type-imports":
+      process.env.NODE_ENV === "production"
+        ? "off"
+        : [
+            "warn",
+            {
+              prefer: "type-imports",
+              fixStyle: "inline-type-imports",
+            },
+          ],
+    "@typescript-eslint/no-empty-interface":
+      process.env.NODE_ENV === "production" ? "off" : "warn",
   },
 };
 
