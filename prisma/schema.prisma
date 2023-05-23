@@ -108,9 +108,10 @@ model IGCSEClass {
 // 0   - N/A
 
 model IGCSEAlumni {
-    id              String    @id @default(cuid())
+    id              String      @id @default(cuid())
     name            String
-    image           String 
+    image           String
+    gender          String     
     esl             Int
     efl             Int
     emaths          Int
@@ -159,9 +160,10 @@ model ALevelClass {
 // 0   - N/A
 
 model ALevelAlumni {
-    id              String    @id @default(cuid())
+    id              String      @id @default(cuid())
     name            String
     image           String
+    gender          String      
     english         Int 
     pureMaths       Int
     furtherMaths    Int 

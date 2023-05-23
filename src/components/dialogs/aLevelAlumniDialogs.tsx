@@ -55,6 +55,7 @@ export const AddALevelAlumniDialog: React.FC<AddDialogProps> = (props) => {
   // State variables and setters to store grades of each subjects
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const [gender, setGender] = useState("Female" as "Male" | "Female");
   const [english, setEnglish] = useState("-" as GradesType);
   const [pureMaths, setPureMaths] = useState("-" as GradesType);
   const [furtherMaths, setFurtherMaths] = useState("-" as GradesType);
@@ -155,6 +156,7 @@ export const AddALevelAlumniDialog: React.FC<AddDialogProps> = (props) => {
     createALevelAlumni.mutate({
       name: name,
       image: "",
+      gender: gender,
       classId: props.classId,
       english: gradeToInt[english],
       pureMaths: gradeToInt[pureMaths],
@@ -249,6 +251,33 @@ export const AddALevelAlumniDialog: React.FC<AddDialogProps> = (props) => {
               )}
             </div>
           </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="gender" className="text-right">
+              Gender
+            </Label>
+
+            <Select
+              value={gender}
+              onValueChange={(value) => {
+                setGender(value as "Male" | "Female");
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select a gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Gender</SelectLabel>
+                  <SelectItem key="Male" value="Male">
+                    Male
+                  </SelectItem>
+                  <SelectItem key="Female" value="Female">
+                    Female
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           {subjects.map((subject) => {
             return (
               <div
@@ -305,6 +334,7 @@ interface EditDialogProps {
 export const EditALevelAlumniDialog: React.FC<EditDialogProps> = (props) => {
   // State variables and setters to store grades of each subjects
   const [name, setName] = useState(props.alumni?.name ?? "");
+  const [gender, setGender] = useState("Female" as "Male" | "Female");
   const [english, setEnglish] = useState(
     intToGrade[props.alumni?.english as IntGradesType] as GradesType
   );
@@ -433,6 +463,7 @@ export const EditALevelAlumniDialog: React.FC<EditDialogProps> = (props) => {
     editALevelAlumni.mutate({
       id: props.alumni?.id ?? "",
       name: name,
+      gender: gender,
       english: gradeToInt[english],
       pureMaths: gradeToInt[pureMaths],
       furtherMaths: gradeToInt[furtherMaths],
@@ -529,6 +560,33 @@ export const EditALevelAlumniDialog: React.FC<EditDialogProps> = (props) => {
                 <></>
               )}
             </div>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="gender" className="text-right">
+              Gender
+            </Label>
+
+            <Select
+              value={gender}
+              onValueChange={(value) => {
+                setGender(value as "Male" | "Female");
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select a gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Gender</SelectLabel>
+                  <SelectItem key="Male" value="Male">
+                    Male
+                  </SelectItem>
+                  <SelectItem key="Female" value="Female">
+                    Female
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           {subjects.map((subject) => {
             return (

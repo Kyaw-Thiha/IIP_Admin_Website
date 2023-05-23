@@ -28,6 +28,8 @@ export const igcseAlumniRouter = createTRPCRouter({
       z.object({
         name: z.string(),
         image: z.string(),
+        gender: z.union([z.literal("Male"), z.literal("Female")]),
+
         classId: z.string(),
         esl: z.number(),
         efl: z.number(),
@@ -52,6 +54,7 @@ export const igcseAlumniRouter = createTRPCRouter({
         data: {
           name: input.name,
           image: input.image,
+          gender: input.gender,
           classId: input.classId,
           esl: input.esl,
           efl: input.efl,
@@ -96,6 +99,7 @@ export const igcseAlumniRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string(),
+        gender: z.union([z.literal("Male"), z.literal("Female")]),
         esl: z.number(),
         efl: z.number(),
         emaths: z.number(),
@@ -121,6 +125,7 @@ export const igcseAlumniRouter = createTRPCRouter({
         },
         data: {
           name: input.name,
+          gender: input.gender,
           esl: input.esl,
           efl: input.efl,
           emaths: input.emaths,

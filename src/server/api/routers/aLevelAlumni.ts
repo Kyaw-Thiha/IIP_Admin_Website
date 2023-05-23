@@ -28,6 +28,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
       z.object({
         name: z.string(),
         image: z.string(),
+        gender: z.union([z.literal("Male"), z.literal("Female")]),
         classId: z.string(),
         english: z.number(),
         pureMaths: z.number(),
@@ -51,6 +52,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
         data: {
           name: input.name,
           image: input.image,
+          gender: input.gender,
           classId: input.classId,
           english: input.english,
           pureMaths: input.pureMaths,
@@ -94,6 +96,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string(),
+        gender: z.union([z.literal("Male"), z.literal("Female")]),
         english: z.number(),
         pureMaths: z.number(),
         furtherMaths: z.number(),
@@ -118,6 +121,7 @@ export const aLevelAlumniRouter = createTRPCRouter({
         },
         data: {
           name: input.name,
+          gender: input.gender,
           english: input.english,
           pureMaths: input.pureMaths,
           furtherMaths: input.furtherMaths,
