@@ -44,3 +44,5 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
    - Add corresponding data in `subjects` array
    - Add corresponding data in `confirm` method
    - Repeat the above 3 steps for `EditDialog`
+
+Don't forget to add new subject inside the client
