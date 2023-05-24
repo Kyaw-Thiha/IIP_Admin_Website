@@ -6,6 +6,7 @@ import { api } from "@/utils/api";
 import { Toaster } from "@/components/ui/toaster";
 
 import "@/styles/globals.css";
+import Head from "next/head";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -13,6 +14,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Head>
+        <title>IIP International School</title>
+        <link rel="icon" href="./favicon.svg" />
+      </Head>
       <Component {...pageProps} />
       <Toaster />
     </SessionProvider>
