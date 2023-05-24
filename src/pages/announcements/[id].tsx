@@ -96,9 +96,11 @@ const AnnouncementPage: NextPage<
     editImage.mutate({ id: data?.id ?? "", image: fileUrl });
   };
 
+  const createDeletedImage = api.deletedImage.create.useMutation({});
   // Function to remove image
   const deleteImage = () => {
     // Need to implement the logic of actually deleting the image in uploadthing
+    createDeletedImage.mutate({ url: data?.image ?? "" });
     editImage.mutate({ id: data?.id ?? "", image: "" });
   };
 

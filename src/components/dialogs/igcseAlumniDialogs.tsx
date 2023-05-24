@@ -202,9 +202,11 @@ export const AddIGCSEAlumniDialog: React.FC<AddDialogProps> = (props) => {
     setImage(fileUrl);
   };
 
+  const createDeletedImage = api.deletedImage.create.useMutation({});
   // Function to remove image
   const deleteImage = () => {
     // Need to implement the logic of actually deleting the image in uploadthing
+    createDeletedImage.mutate({ url: image });
     setImage("");
   };
 
@@ -525,9 +527,11 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
     editImage.mutate({ id: props.alumni?.id ?? "", image: fileUrl });
   };
 
+  const createDeletedImage = api.deletedImage.create.useMutation({});
   // Function to remove image
   const deleteImage = () => {
     // Need to implement the logic of actually deleting the image in uploadthing
+    createDeletedImage.mutate({ url: props.alumni?.image ?? "" });
     editImage.mutate({ id: props.alumni?.id ?? "", image: "" });
   };
 

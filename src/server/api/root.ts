@@ -5,6 +5,7 @@ import { aLevelClassRouter } from "@/server/api/routers/alevelClass";
 import { aLevelAlumniRouter } from "@/server/api/routers/aLevelAlumni";
 import { announcementRouter } from "@/server/api/routers/announcement";
 import { userRouter } from "@/server/api/routers/users";
+import { deletedImageRouter } from "@/server/api/routers/deletedImage";
 
 /**
  * This is the primary router for your server.
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   aLevelClass: aLevelClassRouter,
   aLevelAlumni: aLevelAlumniRouter,
   announcement: announcementRouter,
+  deletedImage: deletedImageRouter,
 });
 
 // export type definition of API

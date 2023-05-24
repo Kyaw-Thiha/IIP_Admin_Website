@@ -198,3 +198,23 @@ model Announcement {
 
     @@unique([id])
 }
+
+// This is a temporary table for storing the url of deleted images
+// Use this to clean up the images on UploadThing
+//
+// When uploadthing implements delete API, this table can be removed
+// Also remove the router in src/server/api/routers/deletedImage.ts
+// Remove its binding in src/server/api/root.ts
+//
+// Then, implement the actual image deletion logic in 
+// - src/components/dialogs/igcseAlumniDialog.tsx
+// - src/components/dialogs/aLevelAlumniDialog.tsx
+// - src/pages/announcements/[id].tsx
+
+model DeletedImage {
+    id          String    @id @default(cuid())
+    url         String
+    dateDeleted DateTime @default(now())
+
+    @@unique([id])
+}
