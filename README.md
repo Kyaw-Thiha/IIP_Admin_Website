@@ -26,3 +26,21 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 ## How do I deploy this?
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+
+## Adding a new subject to alumni
+
+1. Add a new row in IGCSEAlumni or ALevelAlumni of `prisma/schema.prisma`.
+
+   ❗Add an @default(0) value beside the row initially in order to prevent the table being reseted.
+
+   Run `yarn prisma db push` in the terminal
+
+   (Optional) Remove the @default value and run back `yarn prisma db push` in the terminal
+
+2. Add in `src/server/api/routers/igcseAlumni` or `src/server/api/routers/aLevelAlumni`. It should be added to `create` and `edit` methods
+
+3. Add in `src/components/dialogs/igcseAlumniDialog.tsx` or `src/components/dialogs/aLevelAlumniDialog.tsx`.
+   - Inside `AddDialog`, create a reactive variable and setter using react's `useState` hook
+   - Add corresponding data in `subjects` array
+   - Add corresponding data in `confirm` method
+   - Repeat the above 3 steps for `EditDialog`
