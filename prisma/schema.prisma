@@ -108,26 +108,27 @@ model IGCSEClass {
 // 0   - N/A
 
 model IGCSEAlumni {
-    id              String      @id @default(cuid())
-    name            String
-    image           String
-    gender          String     
-    esl             Int
-    efl             Int
-    emaths          Int
-    amaths          Int
-    chemistry       Int
-    physics         Int
-    biology         Int
-    ict             Int
-    cs              Int
-    business        Int
-    accounting      Int
-    economics       Int
-    history         Int
-    geography       Int
-    psychology      Int
-    totalGrades     Int
+    id                      String      @id @default(cuid())
+    name                    String
+    image                   String
+    gender                  String     
+    esl                     Int
+    efl                     Int
+    englishLiterature       Int         
+    emaths                  Int
+    amaths                  Int
+    chemistry               Int
+    physics                 Int
+    biology                 Int
+    ict                     Int
+    cs                      Int
+    business                Int
+    accounting              Int
+    economics               Int
+    history                 Int
+    geography               Int
+    psychology              Int
+    totalGrades             Int
     extraSubjects           String?      // List of extra subjects using comma separated syntax. Eg: ['English Literature', 'Law']  
     extraSubjectsGrades     String?         // List of grades of extra subjects using comma sepatarted syntax. Eg: [8, 9]
     classId     String

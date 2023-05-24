@@ -58,6 +58,7 @@ export const AddIGCSEAlumniDialog: React.FC<AddDialogProps> = (props) => {
   const [gender, setGender] = useState("Female" as "Male" | "Female");
   const [esl, setESL] = useState("-" as GradesType);
   const [efl, setEFL] = useState("-" as GradesType);
+  const [englishLiterature, setEnglishLiterature] = useState("-" as GradesType);
   const [emaths, setEMaths] = useState("-" as GradesType);
   const [amaths, setAMaths] = useState("-" as GradesType);
   const [chemistry, setChemistry] = useState("-" as GradesType);
@@ -83,6 +84,11 @@ export const AddIGCSEAlumniDialog: React.FC<AddDialogProps> = (props) => {
       label: "EFL",
       value: efl,
       func: setEFL,
+    },
+    {
+      label: "EnglishLiterature",
+      value: englishLiterature,
+      func: setEnglishLiterature,
     },
     {
       label: "E.Maths",
@@ -166,6 +172,7 @@ export const AddIGCSEAlumniDialog: React.FC<AddDialogProps> = (props) => {
       classId: props.classId,
       esl: gradeToInt[esl],
       efl: gradeToInt[efl],
+      englishLiterature: gradeToInt[englishLiterature],
       emaths: gradeToInt[emaths],
       amaths: gradeToInt[amaths],
       chemistry: gradeToInt[chemistry],
@@ -352,6 +359,9 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
   const [efl, setEFL] = useState(
     intToGrade[props.alumni?.efl as IntGradesType] as GradesType
   );
+  const [englishLiterature, setEnglishLiterature] = useState(
+    intToGrade[props.alumni?.englishLiterature as IntGradesType] as GradesType
+  );
   const [emaths, setEMaths] = useState(
     intToGrade[props.alumni?.emaths as IntGradesType] as GradesType
   );
@@ -403,6 +413,11 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
       label: "EFL",
       value: efl,
       func: setEFL,
+    },
+    {
+      label: "English Literature",
+      value: englishLiterature,
+      func: setEnglishLiterature,
     },
     {
       label: "E.Maths",
@@ -485,6 +500,7 @@ export const EditIGCSEAlumniDialog: React.FC<EditDialogProps> = (props) => {
       gender: gender,
       esl: gradeToInt[esl],
       efl: gradeToInt[efl],
+      englishLiterature: gradeToInt[englishLiterature],
       emaths: gradeToInt[emaths],
       amaths: gradeToInt[amaths],
       chemistry: gradeToInt[chemistry],
