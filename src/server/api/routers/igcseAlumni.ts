@@ -23,6 +23,18 @@ export const igcseAlumniRouter = createTRPCRouter({
     });
   }),
 
+  search: publicProcedure
+    .input(z.object({ name: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.iGCSEAlumni.findMany({
+        where: {
+          name: {
+            search: input.name,
+          },
+        },
+      });
+    }),
+
   create: publicProcedure
     .input(
       z.object({

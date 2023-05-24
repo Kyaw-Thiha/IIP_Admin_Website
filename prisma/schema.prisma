@@ -3,7 +3,7 @@
 
 generator client {
     provider = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+    previewFeatures = ["jsonProtocol", "fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -133,6 +133,7 @@ model IGCSEAlumni {
     classId     String
     class      IGCSEClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+    @@fulltext([name])
     @@index([classId])
     @@unique([id])
 }
@@ -184,6 +185,7 @@ model ALevelAlumni {
     classId         String
     class      ALevelClass     @relation(fields: [classId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+    @@fulltext([name])
     @@index([classId])
     @@unique([id])
 }

@@ -23,6 +23,18 @@ export const aLevelAlumniRouter = createTRPCRouter({
     });
   }),
 
+  search: publicProcedure
+    .input(z.object({ name: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.aLevelAlumni.findMany({
+        where: {
+          name: {
+            search: input.name,
+          },
+        },
+      });
+    }),
+
   create: publicProcedure
     .input(
       z.object({
