@@ -192,10 +192,10 @@ model ALevelAlumni {
 }
 
 model Announcement {
-    id          String    @id @default(cuid())
-    title       String
+    id          String      @id @default(cuid())
+    title       String      @db.Text
     image       String 
-    text        String  
+    text        String      @db.LongText
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
